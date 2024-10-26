@@ -1,5 +1,5 @@
 # Software for collection filters
-Welcome to my project, which was developed for working with collections and also to demonstrate your skills in writing code.
+Welcome to my project, which was developed for working with collections and also to demonstrate you my skills in writing code.
 
 ## Overview
 
