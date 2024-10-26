@@ -19,10 +19,10 @@ This project implements a filtering system for a collection of `Person` objects.
 1. Clone this repository:
 
    
-```git@github.com:yawdenisk/soft_for_store.git```
+```git clone https://github.com/yawdenisk/collection-filters.git```
 
 2. Run the project
 # How to use 
 In the main class you can view the testing of my project
 # Thank you
-Thank you for your interest in my software for online storeproject. I am sure that it will help you objectively evaluate my skills.
+Thank you for your interest in my software. I am sure that it will help you objectively evaluate my skills.
