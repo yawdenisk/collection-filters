@@ -13,8 +13,8 @@ This project implements a filtering system for a collection of `Person` objects.
 - **Extensibility**: Easily extendable with new filters and calculations
 
 
+[task.pdf](https://github.com/user-attachments/files/17532065/Lab04.3.pdf)
 
-!(https://github.com/user-attachments/files/17532059/Lab04.pdf)
 # Setup
 1. Clone this repository:
 
