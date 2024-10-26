@@ -3,6 +3,15 @@ package org.example.queries.results;
 import org.example.queries.search.Funcs;
 
 public class FunctionResult {
+    @Override
+    public String toString() {
+        return "FunctionResult{" +
+                "function=" + function +
+                ", fieldName='" + fieldName + '\'' +
+                ", value=" + value +
+                '}';
+    }
+
     private Funcs function;
     private String fieldName;
     private double value;

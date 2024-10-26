@@ -3,6 +3,8 @@ package org.example;
 import org.example.model.Gender;
 import org.example.model.PeopleSample;
 import org.example.model.Person;
+import org.example.model.calculators.GeneralCalculator;
+import org.example.model.filters.*;
 import org.example.queries.QueryProcessor;
 import org.example.queries.results.Results;
 import org.example.queries.search.Funcs;
@@ -12,7 +14,6 @@ import org.example.queries.search.SearchParameters;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args){
@@ -23,11 +24,11 @@ public class Main {
          * Zanim zaczniesz pracę zaznajom się z klasami w projekcie
          */
 
-//        List<Person> sampleData = new ArrayList<>(PeopleSample.Data);
-//
-//        SearchParameters searchParameters = new SearchParameters();
-//
-//        searchParameters.setName("jan");
+        List<Person> sampleData = new ArrayList<>(PeopleSample.Data);
+
+        SearchParameters searchParameters = new SearchParameters();
+
+        searchParameters.setName("jan");
 
 
         /**
@@ -36,7 +37,7 @@ public class Main {
          * niezbędne do przefiltrowywania kolekcji osób
          */
 
-//        IFilterPeople byName = new ByNameFilter();
+        IFilterPeople byName = new ByNameFilter();
 
         /**
          * Niech ten interfejs posiada następujące metody:
@@ -45,26 +46,25 @@ public class Main {
          * -> filter - metoda któa zwróci nowa kolekcje
          */
 
-//        byName.setSearchParameters(searchParameters);
-//
-//
-//        if(byName.canFilter()){
-//            sampleData = byName.filter(sampleData);
-//        }
+        byName.setSearchParameters(searchParameters);
 
+
+        if(byName.canFilter()){
+            sampleData = byName.filter(sampleData);
+        }
         /**
          * Dodajmy jeszcze 2 implementacje dla filtrów:
          * -> wiek od,
          * -> wiek do
          */
 
-//        searchParameters.setName(null);
-//        searchParameters.setAgeFrom(30);
-//
-//        IFilterPeople byAgeFromFilter = new ByAgeFromFilter();
-//        byAgeFromFilter.setSearchParameters(searchParameters);
-//        IFilterPeople byAgeToFilter = new ByAgeToFilter();
-//        byAgeToFilter.setSearchParameters(searchParameters);
+        searchParameters.setName(null);
+        searchParameters.setAgeFrom(30);
+
+        IFilterPeople byAgeFromFilter = new ByAgeFromFilter();
+        byAgeFromFilter.setSearchParameters(searchParameters);
+        IFilterPeople byAgeToFilter = new ByAgeToFilter();
+        byAgeToFilter.setSearchParameters(searchParameters);
 
         /**
          * Pewnie jesteś bystrym programistą/ką
@@ -76,10 +76,10 @@ public class Main {
          *    który zwróci warunek filtracji (tutaj trzeba będzie dostarczyć własny interfejs funkcjonalny)
          */
 
-//        IFilterPeople genericFilter = new GeneralFilter(
-//                (searchParams)->searchParams.getSelectedGenders().size()>0,
-//                (searchParams, person)->searchParams.getSelectedGenders().contains(person.getGender())
-//        );
+        IFilterPeople genericFilter = new GeneralFilter(
+                (searchParams)->searchParams.getSelectedGenders().size()>0,
+                (searchParams, person)->searchParams.getSelectedGenders().contains(person.getGender())
+        );
 
 
         /**
@@ -87,11 +87,11 @@ public class Main {
          * na dodawanie filtrów do kolekcji
          */
 
-//        QueryProcessor queryProcessor = new QueryProcessor()
-//                .addFilter(byName)
-//                .addFilter(byAgeToFilter)
-//                .addFilter(byAgeToFilter)
-//                .addFilter(genericFilter);
+        QueryProcessor queryProcessor = new QueryProcessor()
+                .addFilter(byName)
+                .addFilter(byAgeToFilter)
+                .addFilter(byAgeToFilter)
+                .addFilter(genericFilter);
 
         /**
          * Dostarcz dwa obiekty generycznego filtra:
@@ -105,8 +105,12 @@ public class Main {
          * W tym miejscu pozwalam na edycje maina *
          ******************************************/
 
-//        queryProcessor.addFilter(byIncomeToGenericFilter)
-//                .addFilter(byIncomeFromGenericFilter);
+        IFilterPeople byIncomeToGenericFilter = new byIncomeToGenericFiler();
+        IFilterPeople byIncomeFromGenericFilter =  new byIncomeFromGenericFilter();
+        byIncomeFromGenericFilter.setSearchParameters(searchParameters);
+        byIncomeToGenericFilter.setSearchParameters(searchParameters);
+        queryProcessor.addFilter(byIncomeToGenericFilter)
+                .addFilter(byIncomeFromGenericFilter);
 
 
         /**
@@ -120,7 +124,7 @@ public class Main {
          *    która zwraca te pole (jak typ danych dla liczb użyj klasy bazowej dla wszystkich liczb)
          */
 
-//        ICalculate incomeCalculator = new GeneralCalculator("income", p-> p.getIncome() );
+        ICalculate incomeCalculator = new GeneralCalculator("income", p-> p.getIncome() );
 
         /**
          * Niech interfejs posiada metodę o nazwie calculate,
@@ -131,16 +135,16 @@ public class Main {
          * W wyniku ma zwrócić liczbę double która jest wynikiem obliczeń
          */
 
-//        double sumOfIncomes = incomeCalculator
-//                .calculate(new FunctionsParameters("income", Funcs.SUM), sampleData);
-//        ICalculate ageCalculator = new GeneralCalculator("age", p-> p.getAge());
+        double sumOfIncomes = incomeCalculator
+                .calculate(new FunctionsParameters("income", Funcs.SUM), sampleData);
+        ICalculate ageCalculator = new GeneralCalculator("age", p-> p.getAge());
 
         /**
          * dodajmy nasze kalkulatory, do obiektu klasy QueryProcessor
          */
 
-//        queryProcessor.addCalculation(incomeCalculator)
-//                .addCalculation(ageCalculator);
+        queryProcessor.addCalculation(incomeCalculator)
+                .addCalculation(ageCalculator);
 
         /**
          * Ostatnim krokiem do zakońćzenia zadania jest
@@ -149,15 +153,14 @@ public class Main {
          * będzie "kroiła" strumień osób do wcześniej zadeklarowanej strony wyników
          */
 
-//        ICutToPage pageCutter = new PageCutter();
-//
-//        sampleData = pageCutter.cut(new Page(3,2), sampleData);
+        ICutToPage pageCutter = new PageCutter();
 
+        sampleData = pageCutter.cut(new Page(3,2), sampleData);
         /**
          * dodajmy też ten obiekt do QueryProcessora
          */
 
-//        queryProcessor.addPageCutter(pageCutter);
+        queryProcessor.addPageCutter(pageCutter);
 
         /**
          * I teraz wisienka na torcie,
@@ -167,14 +170,17 @@ public class Main {
          * oraz zwróćmy rządaną stronę wyników
          */
 
-//        Results results = queryProcessor.GetResults(sampleSearchParams(), PeopleSample.Data);
-//
-//        if(!resultsAreGood(results)){
-//            System.out.println("filtrowanie nie działa prawidłowo :(");
-//            return;
-//        }
-//
-//        System.out.println("wygląda akceptowalnie.");
+        Results results = queryProcessor.GetResults(sampleSearchParams(), PeopleSample.Data);
+        System.out.println(results.getItems());
+        System.out.println(results.getFunctionResults().toString());
+
+
+        if(!resultsAreGood(results)){
+            System.out.println("filtrowanie nie działa prawidłowo :(");
+            return;
+        }
+
+        System.out.println("wygląda akceptowalnie.");
 
     }
 
