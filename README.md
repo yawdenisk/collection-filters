@@ -14,7 +14,7 @@ This project implements a filtering system for a collection of `Person` objects.
 
 
 
-![Lab04.pdf](https://github.com/user-attachments/files/17532059/Lab04.pdf)
+!(https://github.com/user-attachments/files/17532059/Lab04.pdf)
 # Setup
 1. Clone this repository:
 
